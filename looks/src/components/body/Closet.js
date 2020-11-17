@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
-import data from "../../data/data";
+import React, {useEffect, useState} from 'react'
 import Cloth from "./Cloth";
 import { createGlobalStyle } from "styled-components";
+import {connect} from 'react-redux'
+import {fetchLottery, winLottery, subHanger, addHanger} from '../../actions/index'
+
 
 function Closet(props) {
-    const item = props.items;
-    const [num, setNum] = useState(Math.floor(window.innerWidth/330))
-
+    
+    
     const {moveItemToTemp, moveTempToItem} = props
     const hangerSetting = () => {
         const onCheck = () => {
@@ -14,19 +15,14 @@ function Closet(props) {
                         옷걸이 개수 추가하기
                 </div>)
         }
-        return (num>6 ? "" : onCheck())
+        return (props.itemSet.length>=6 ? "" : onCheck())
     }
 
     const addHanger = (e) => {
         e.preventDefault();
-        moveTempToItem()
-        setNum(num+1)
+        props.addHanger()
     }
 
-    const subsHanger = (props) => {
-        setNum(num-1)
-        moveItemToTemp(props.id)
-    }
 
     const GlobalStyles = createGlobalStyle`
     .closet {
@@ -45,9 +41,13 @@ function Closet(props) {
 
     const loadItem = (item) => {
         return item.map(data => {
-            return (<div key={data.id? data.id:"none"} className="closetPlace">
-                         <Cloth props={data} subsHanger={subsHanger} lockItem = {props.lockItem} addItemNum={props.addItemNum} />
-                 </div>)
+            console.log(data)
+            if(data.itemList.length>0){
+                return (<div key={data.id? data.id:"none"} className="closetPlace">
+                        <Cloth props={data}  lockItem = {props.lockItem}  />
+                </div>)
+            }
+            return null;
         });
     };
 
@@ -55,11 +55,23 @@ function Closet(props) {
         <>
             <GlobalStyles></GlobalStyles>
             <div className="closet">
-                {loadItem(item)}
+                {loadItem(props.itemSet)}
                 {hangerSetting()}
             </div>
         </>
     )
 }
 
-export default Closet
+const mapStateToProps = (state) => ({
+    itemSet : state.items.dataList
+})
+
+const mapDispatchToProps = {
+    fetchLottery,
+    winLottery,
+    subHanger, 
+    addHanger
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Closet);

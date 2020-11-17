@@ -1,31 +1,34 @@
 import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
+import {fetchLottery, winLottery, winLotto, subHanger, addHanger, lockHanger} from '../../actions/index'
 
 import { createGlobalStyle } from "styled-components";
 
-const Cloth = ({props, subsHanger, addItemNum, lockItem}) => {
+const Cloth = (props) => {
 
-    const [itemNum, setItemNum] = useState(props? props['num']:0);
-    const [itemList, setItemList] = useState(props? props['itemList']:[]);
+    const [itemNum, setItemNum] = useState(props.props? props.props['num']:0);
+    const [itemList, setItemList] = useState(props.props? props.props['itemList']:[]);
     const [item, setItem] = useState(itemList[itemNum])
 
-    const onSubsHanger = (e) => {
-        e.preventDefault();
-        subsHanger(props)
+    const onSubsHanger = () => {
+        props.subHanger(props.props.id)
     }
 
+
+
     useEffect(() => {
-        setItemNum(props['num'])
-        setItem(itemList[props['num']])
-    }, [props])
+        setItemNum(props.props['num'])
+        setItem(itemList[props.props['num']])
+    }, [itemList, props.props])
 
     const onClickAddItemNum = (e) => {
         e.preventDefault();
-        addItemNum(props['id']);
+        props.winLotto(props.props['id']);
     }
 
     const onClickLockItem = (e) => {
         e.preventDefault();
-        lockItem(props['id']);
+        props.lockHanger(props.props['id']);
     }
     const GlobalStyles = createGlobalStyle`
 
@@ -154,4 +157,18 @@ const Cloth = ({props, subsHanger, addItemNum, lockItem}) => {
     )
 }
 
-export default Cloth
+const mapStateToProps = (state) => ({
+
+})
+
+const mapDispatchToProps = {
+    fetchLottery,
+    winLottery,
+    subHanger, 
+    addHanger,
+    lockHanger,
+    winLotto
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cloth);
