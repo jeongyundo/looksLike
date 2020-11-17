@@ -1,0 +1,5 @@
+export const FETCH_LOOKS = 'FETCH_LOOKS'
+export const FETCH_ITMES = 'FETCH_ITMES'
+export const SUB_HANGER = 'SUB_HANGER'
+export const ADD_HANGER = 'ADD_HANGER'
+export const ROTATE_ITEMS = 'ROTATE_ITEMS'
