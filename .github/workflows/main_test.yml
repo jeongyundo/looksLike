@@ -22,13 +22,15 @@ jobs:
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
 
-      - name: Update Dependencies   # 의존 파일 설치
-        working-directory: ./looks
-        run: sudo npm install -g react-scripts
+
         
       - name: Install Dependencies   # 의존 파일 설치
         working-directory: ./looks
         run: npm install
+        
+      - name: Update Dependencies   # 의존 파일 설치
+        working-directory: ./looks
+        run: sudo npm install -g react-scripts
 
       - name: Build                   # React Build
         working-directory: ./looks
