@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { createGlobalStyle } from "styled-components";
+import { winLottery } from '../../actions/index';
 
-export const MainHeader = () => {
+const MainHeader = (props) => {
     const GlobalStyles = createGlobalStyle`
     .header {
         width: 100%;
@@ -52,7 +54,7 @@ export const MainHeader = () => {
                         LooksLike
                     </div>
                 </div>
-                <div className="headerSetting">
+                <div className="headerSetting" onClick={props.winLottery}>
                     <div className="headerSettingContainer">
                         <p className="headerSettingTxt">
                             랜덤
@@ -83,5 +85,14 @@ export const MainHeader = () => {
         </>
     )
 }
+const mapStateToProps = (state) => ({
 
-export default MainHeader
+})
+
+const mapDispatchToProps = {
+
+    winLottery,
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);
