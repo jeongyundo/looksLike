@@ -24,7 +24,7 @@ jobs:
 
       - name: Update Dependencies   # 의존 파일 설치
         working-directory: ./looks
-        run: npm install -g npm@latest
+        run: npm update
         
       - name: Install Dependencies   # 의존 파일 설치
         working-directory: ./looks
