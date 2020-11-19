@@ -38,6 +38,6 @@ jobs:
 
       - name: Build                   # React Build
         working-directory: ./looks
-        run: npm run build:ci
+        run: npm run build
         env:
            CI: false
