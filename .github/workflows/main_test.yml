@@ -22,10 +22,10 @@ jobs:
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
 
-      - name: move to folder
-        uses: cd looks
-      - name: Install Dependencies    # 의존 파일 설치
+      - name: Install Dependencies   # 의존 파일 설치
+        working-directory: ./looks
         run: npm install
 
       - name: Build                   # React Build
+        working-directory: ./looks
         run: npm run build
