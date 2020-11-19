@@ -26,10 +26,11 @@ function Closet(props) {
 
     const GlobalStyles = createGlobalStyle`
     .closet {
+
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 5px 5px;
-        padding: 10px 40px;
+        padding: 10px;
     }
 
     .closetPlace {
