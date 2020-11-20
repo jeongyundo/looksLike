@@ -33,27 +33,25 @@ const Cloth = (props) => {
     const GlobalStyles = createGlobalStyle`
 
     .clothCard {
-        margin: auto;
         height: 100%;
+        width: 100%;
     }
 
     .cloth {
         position: relative;
         width: 100%;
         height: 80%;
-
     }
 
     .clothImage {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        
+        position: absolute; top:0; left: 0;
+
+        height: 100%;
     }
     
-    img {
+    .clothImage img {
         width: 100%;
-        height: auto;
+        height: 100%;
     }
 
     .clothContainer {
@@ -69,8 +67,8 @@ const Cloth = (props) => {
     }
 
     .clothContentTitle {
-        font-size: large;
-        font-weight: 400;
+        font-size: small;
+        font-weight: 300;
     }
 
     .clothContentDetails {

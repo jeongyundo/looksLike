@@ -28,14 +28,14 @@ function Closet(props) {
     .closet {
 
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 300px);
         gap: 5px 5px;
         padding: 10px;
     }
 
     .closetPlace {
         width : 300px;
-        height : 450px;
+        height : calc((100vh - 80px) /2);
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     }
     `
