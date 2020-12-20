@@ -20,26 +20,39 @@ const itemReducer = (state = initialState, action) => {
             return {...state, ...tempState}
 
         case MAKE_STATE : 
+            console.log(action.payload)
             tempState.hangerNum = action?.payload?.hangerNum;
             tempState.dataSet = action.payload?.hangers;
-            tempState.clothSet = action?.payload?.items;
+            tempState.clothSet = action?.payload?.itemset;
             return {...state, ...tempState}
 
         case CHANGE_LOOKS :
+            if(tempState.clothSet.length<tempState.hangerNum){
+                alert("자료가 이제 없어요.")
+                return state;
+            }
             for (var i = 0; i < tempState.hangerNum; i++) {
                 var tempName = "hanger_"+String(i+1)
                 var tempData = tempState?.dataSet[tempName]
                 if(!tempData.lockOn){
                     tempData.previousData.push(tempData.presentData)
-                    tempData.presentData = randomPopup(tempState.clothSet)
+                    var {item, itemset} = randomPopup(tempState.clothSet)
+                    tempData.presentData = item
+                    tempState.clothSet = itemset
                 }
             }
             return {...state, ...tempState} 
 
         case CHANGE_LOOK :
+            if(!tempState.clothSet){
+                alert("자료가 이제 없어요.")
+                return state;
+            }
             console.log(oneData)
             oneData.previousData.push(oneData.presentData)
-            oneData.presentData = randomPopup(tempState.clothSet)
+            var {oneItem, oneItemset} = randomPopup(tempState.clothSet)
+            tempData.clothSet = oneItemset
+            oneData.presentData = oneItem
             return {...state, ...tempState}
 
         case LOCK_HANGER : 

@@ -8,9 +8,8 @@ function randomPopup(listdata) {
         });
     }
 
-    arrayRemove(listdata, item)
-
-    return item
+    var itemset = arrayRemove(listdata, item)
+    return {item, itemset}
 }
 
 export default randomPopup;

@@ -58,17 +58,18 @@ export const setHanger = (hangerNum) => async dispatch => {
         var item = {}
         for (var i = 0; i < hangerNum; i++) {
             var tempName = "hanger_"+String(i+1);
-            var cloth = randomPopup(items);
+            var {item: cloth, itemset} = randomPopup(items);
+            items = itemset
             Object.assign(item, {[tempName] : hanger.item(i+1, cloth)})
         }
-        return item
+        return {item, itemset}
     }
     
 
     const output = async (hangerNum) => {
         const items = await data;
-        const hangers = await makeHanger(hangerNum, items);
-        return {hangers, items, hangerNum};
+        const {item:hangers, itemset} = await makeHanger(hangerNum, items);
+        return {hangers, itemset, hangerNum };
     }
     
     dispatch({ type: MAKE_STATE, payload: output(hangerNum)})
