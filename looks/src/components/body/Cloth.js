@@ -1,133 +1,144 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import {fetchLottery, winLottery, winLotto, subHanger, addHanger, lockHanger} from '../../actions/index'
+import { changeCloth, lockHanger, giveLike, cancleLike} from '../../actions/index'
 
 import { createGlobalStyle } from "styled-components";
-
-const Cloth = (props) => {
-
-    const [itemNum, setItemNum] = useState(props.props? props.props['num']:0);
-    const [itemList, setItemList] = useState(props.props? props.props['itemList']:[]);
-    const [item, setItem] = useState(itemList[itemNum])
-
-    const onSubsHanger = () => {
-        props.subHanger(props.props.id)
-    }
-
-
-
-    useEffect(() => {
-        setItemNum(props.props['num'])
-        setItem(itemList[props.props['num']])
-    }, [itemList, props.props])
-
-    const onClickAddItemNum = (e) => {
-        e.preventDefault();
-        props.winLotto(props.props['id']);
-    }
-
-    const onClickLockItem = (e) => {
-        e.preventDefault();
-        props.lockHanger(props.props['id']);
-    }
-    const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
 
     .clothCard {
         height: 100%;
         width: 100%;
-    }
+        background-color: white;
+        .cloth {
+            position: relative;
+            width: 100%;
+            height: 80%;
 
-    .cloth {
-        position: relative;
-        width: 100%;
-        height: 80%;
-    }
-
-    .clothImage {
-        position: absolute; top:0; left: 0;
-
-        height: 100%;
-    }
-    
-    .clothImage img {
-        width: 100%;
-        height: 100%;
+            .clothImage {
+                position: absolute; top:0; left: 0;
+                height: 100%;
+                
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
     }
 
     .clothContainer {
         height: 20%;
-    }
+        background-color: white;
+        .clothContent {
+            height: 67%;
+            padding: 2px;
 
-    .clothContent {
-        height: 66.66%;
-        padding: 2px;
-    }
-    .clothContentItem {
+            .clothContentTitle {
+                font-size: small;
+                font-weight: 300;
+            }
+
+            .clothContentDetails {
+                display: flex;
+                justify-content: space-between;
+
+                .clothContentItem {
         
-    }
+                }
 
-    .clothContentTitle {
-        font-size: small;
-        font-weight: 300;
-    }
+                .clothPrice {
+                    color : red;
+                }
+            }
+        }
 
-    .clothContentDetails {
-        display: flex;
-        justify-content: space-between;
-    }
-    
-    .clothPrice {
-        color : red;
-    }
+        .clothSetting {
+            height: 33%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
 
-    .clothSetting {
-        height: 33.33%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
+            .clothSettingItem {
+                width: 33.33%;
+                position: relative;
+                background-color: gray;
+                
+                border-radius: 3px;
 
-    .clothSettingItem {
-        width: 33.33%;
-        position: relative;
-        background-color: gray;
-        border: 0.5px solid white;
-        border-radius: 3px;
-    }
-
-    .clothSettingBtn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: gray;
-        color: white;
+                .clothSettingBtn {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: gray;
+                    color: white;
+                }
+            }
+        }
     }
     `
+
+const Cloth = ({props, name, giveLike, changeCloth, lockHanger, cancleLike}) => {
+
+    const onClickSendLike = (e) => {
+        e.preventDefault();
+        giveLike(name, props);
+    }
+
+    const onClickCancleLike = (e) => {
+        e.preventDefault();
+        console.log(name, props)
+        cancleLike(name, props);
+    }
+
+    const onClickAddItemNum = (e) => {
+        e.preventDefault();
+        changeCloth(name);
+    }
+
+    const onClickLockItem = (e) => {
+        e.preventDefault();
+        lockHanger(name);
+    }
+    
+
+    const LikeButton = () => {
+        return !props.like ? (
+            <div className="clothSettingItem" onClick={onClickSendLike}>
+                            <button className="clothSettingBtn">
+                                좋아요
+                            </button>
+                        </div>
+        ) : (
+            <div className="clothSettingItem" onClick={onClickCancleLike}>
+                            <button className="clothSettingBtn">
+                                좋아요 취소
+                            </button>
+                        </div>
+        ) 
+        
+    }
+    
     return (
         <>
             <div className="clothCard">
                 
                 <div className="cloth">
-                <div className="subHangerBtn" onClick={onSubsHanger}>
-                        x
-                    </div>
                     <div className="clothImage">
-                        <img src={item.img} alt={props.name}/>
+                        <img src={props.img} alt={props.name}/>
                     </div>
-                    
                 </div>
                 <div className="clothContainer">
                     <div className="clothContent">
                         <div className="clothContentTitle">
-                            {item.name}
+                            {props.name}
                         </div>
                         <div className="clothContentDetails">
                             <div className="clothContentItem">
-                                {item.brand}
+                                {props.brand}
                             </div>
-                            <div className="clothContentItem">
-                                {item.price}
+                            <div className="clothContentPrice">
+                                {props.price}
                             </div>
                         </div>
                     </div>
@@ -142,11 +153,7 @@ const Cloth = (props) => {
                                 랜덤돌리기
                             </button>
                         </div>
-                        <div className="clothSettingItem">
-                            <button className="clothSettingBtn">
-                                좋아요
-                            </button>
-                        </div>
+                        {LikeButton()}
                     </div>
                 </div>
             </div>
@@ -160,12 +167,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    fetchLottery,
-    winLottery,
-    subHanger, 
-    addHanger,
+    changeCloth,
     lockHanger,
-    winLotto
+    giveLike,
+    cancleLike
 }
 
 

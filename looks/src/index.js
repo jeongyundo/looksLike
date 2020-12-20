@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import configureStore from './store/index';
 import reducers from './reducers';
 
+
 const store = configureStore(reducers);
 
 ReactDOM.render(

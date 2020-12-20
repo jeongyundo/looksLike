@@ -1,0 +1,14 @@
+@font-face { 
+    font-family: 'korean Classic'; 
+    src: url(./국립박물관문화재단클래식B.ttf) format('truetype'); 
+}
+
+@font-face { 
+    font-family: 'GimhaeGayaR'; 
+    src: url(./GimhaeGayaR.ttf) format('truetype'); 
+}
+
+@font-face { 
+    font-family: 'IAMAPLAYER'; 
+    src: url(./IAMAPLAYER.ttf) format('truetype'); 
+}
