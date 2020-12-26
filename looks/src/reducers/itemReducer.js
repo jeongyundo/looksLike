@@ -36,7 +36,7 @@ const itemReducer = (state = initialState, action) => {
                 var tempData = tempState?.dataSet[tempName]
                 if(!tempData.lockOn){
                     tempData.previousData.push(tempData.presentData)
-                    var {item, itemset} = randomPopup(tempState.clothSet)
+                    let {item, itemset} = randomPopup(tempState.clothSet)
                     tempData.presentData = item
                     tempState.clothSet = itemset
                 }
@@ -48,11 +48,12 @@ const itemReducer = (state = initialState, action) => {
                 alert("자료가 이제 없어요.")
                 return state;
             }
-            console.log(oneData)
             oneData.previousData.push(oneData.presentData)
-            var {oneItem, oneItemset} = randomPopup(tempState.clothSet)
-            tempData.clothSet = oneItemset
+                let {item:oneItem, itemset:oneItemset} = randomPopup(tempState.clothSet)
+            console.log(oneItem, oneItemset)
+            tempState.clothSet = oneItemset
             oneData.presentData = oneItem
+            console.log(tempState)
             return {...state, ...tempState}
 
         case LOCK_HANGER : 
