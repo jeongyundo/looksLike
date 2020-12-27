@@ -1,4 +1,4 @@
-import {CHANGE_LOOK, CHANGE_LOOKS,  MAKE_STATE, NAVI_TURN,  LOCK_HANGER, GIVE_LIKE, CANCLE_LIKE } from '../actions/type'
+import {CHANGE_LOOK, CHANGE_LOOKS,  MAKE_STATE,POST_CLOTH, NAVI_TURN,  LOCK_HANGER, GIVE_LIKE, CANCLE_LIKE, PREV_CLOTH } from '../actions/type'
 import initialState from "./initialState";
 import randomPopup from '../actions/randomPopup'
 import _ from "lodash"
@@ -20,7 +20,6 @@ const itemReducer = (state = initialState, action) => {
             return {...state, ...tempState}
 
         case MAKE_STATE : 
-            console.log(action.payload)
             tempState.hangerNum = action?.payload?.hangerNum;
             tempState.dataSet = action.payload?.hangers;
             tempState.clothSet = action?.payload?.itemset;
@@ -42,7 +41,7 @@ const itemReducer = (state = initialState, action) => {
                 }
             }
             return {...state, ...tempState} 
-
+        
         case CHANGE_LOOK :
             if(!tempState.clothSet){
                 alert("자료가 이제 없어요.")
@@ -50,10 +49,28 @@ const itemReducer = (state = initialState, action) => {
             }
             oneData.previousData.push(oneData.presentData)
                 let {item:oneItem, itemset:oneItemset} = randomPopup(tempState.clothSet)
-            console.log(oneItem, oneItemset)
             tempState.clothSet = oneItemset
             oneData.presentData = oneItem
-            console.log(tempState)
+            return {...state, ...tempState}
+
+        case PREV_CLOTH :
+            console.log(oneData.previousData)
+            if(oneData.previousData.length!==0){
+                oneData.nextData.push(oneData.presentData)
+                oneData.presentData = oneData.previousData.shift()
+            }else{
+                alert("이전 옷이 없습니다.")
+            }
+            return {...state, ...tempState}
+
+        case POST_CLOTH :
+            console.log(oneData.nextData)
+            if(oneData.nextData.length!==0){
+                oneData.previousData.push(oneData.presentData)
+                oneData.presentData = oneData.nextData.pop()
+            }else{
+                alert("이후 옷이 없습니다.")
+            }
             return {...state, ...tempState}
 
         case LOCK_HANGER : 

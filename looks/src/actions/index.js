@@ -1,4 +1,13 @@
-import { CHANGE_LOOK,NAVI_TURN, CHANGE_LOOKS, CANCLE_LIKE, LOCK_HANGER, MAKE_STATE, GIVE_LIKE } from "./type"
+import { 
+    CHANGE_LOOK,
+    NAVI_TURN, 
+    CHANGE_LOOKS, 
+    CANCLE_LIKE, 
+    PREV_CLOTH, 
+    LOCK_HANGER, 
+    MAKE_STATE, 
+    POST_CLOTH,
+    GIVE_LIKE } from "./type"
 import looks from "../apis/looks"
 import data from "../data/data"
 import randomPopup from "./randomPopup"
@@ -15,6 +24,16 @@ export const changeCloth = (name) => async dispatch => {
 export const lockHanger = (name) => async dispatch => {
     var tempName = "hanger_"+String(name)
     dispatch({ type: LOCK_HANGER, payload: tempName})
+}
+
+export const getBackCloth = (name) => async dispatch => {
+    var tempName = "hanger_"+String(name)
+    dispatch({ type: PREV_CLOTH, payload: tempName})
+}
+
+export const getForthCloth = (name) => async dispatch => {
+    var tempName = "hanger_"+String(name)
+    dispatch({ type: POST_CLOTH, payload: tempName})
 }
 
 
@@ -50,6 +69,7 @@ export const setHanger = (hangerNum) => async dispatch => {
                     lockOn: false,
                     presentData : cloth,
                     previousData : [],
+                    nextData: [],
                     tempData:[],
                 }
                 

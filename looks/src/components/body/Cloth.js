@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { changeCloth, lockHanger, giveLike, cancleLike} from '../../actions/index'
+import { changeCloth, lockHanger, giveLike, cancleLike, getBackCloth,
+    getForthCloth} from '../../actions/index'
 
 import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
@@ -21,6 +22,22 @@ const GlobalStyles = createGlobalStyle`
                 img {
                     width: 100%;
                     height: 100%;
+                }
+
+                .prev {
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    z-index: 20;
+                    background-color: #eee;
+                }
+
+                .next {
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+                    z-index: 20;
+                    background-color: #eee;
                 }
             }
         }
@@ -78,7 +95,7 @@ const GlobalStyles = createGlobalStyle`
     }
     `
 
-const Cloth = ({props, name, giveLike, changeCloth, lockHanger, cancleLike}) => {
+const Cloth = ({props, name, giveLike, changeCloth, lockHanger, cancleLike, getBackCloth, getForthCloth}) => {
 
     const onClickSendLike = (e) => {
         e.preventDefault();
@@ -99,6 +116,16 @@ const Cloth = ({props, name, giveLike, changeCloth, lockHanger, cancleLike}) => 
     const onClickLockItem = (e) => {
         e.preventDefault();
         lockHanger(name);
+    }
+
+    const onClickGetBackCloth = (e) => {
+        e.preventDefault();
+        getBackCloth(name);
+    }
+
+    const onClickGetForthCloth = (e) => {
+        e.preventDefault();
+        getForthCloth(name);
     }
     
 
@@ -126,6 +153,12 @@ const Cloth = ({props, name, giveLike, changeCloth, lockHanger, cancleLike}) => 
                 <div className="cloth">
                     <div className="clothImage">
                         <img src={props.img} alt={props.name}/>
+                        <div className="prev" onClick={onClickGetBackCloth}> 
+                            이전
+                        </div>
+                        <div className="next" onClick={onClickGetForthCloth}>
+                            이후
+                        </div>
                     </div>
                 </div>
                 <div className="clothContainer">
@@ -170,7 +203,9 @@ const mapDispatchToProps = {
     changeCloth,
     lockHanger,
     giveLike,
-    cancleLike
+    cancleLike,
+    getBackCloth,
+    getForthCloth
 }
 
 
