@@ -8,7 +8,7 @@ const NaviBarWrapper = styled.div`
         
         width: 320px;
         right: 0px;;
-        z-index: 1;
+        z-index: 9999;
         border-left: 2px;
         border-left-style: ridge;
         background-color: gainsboro;
